@@ -1,0 +1,15 @@
+{
+  "name": "christian-cain",
+  "version": "1.0.0",
+  "description": "walgreens scrapper",
+  "main": "main.js",
+  "scripts": {
+    "scrape": "node main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "^3.7.0",
+    "pupeteer": "^0.0.1"
+  }
+}
