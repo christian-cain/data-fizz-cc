@@ -1,1 +1,3 @@
-console.log("Hello world!");
+const puppeteer = require('puppeteer');
+
+console.log(typeof puppeteer)

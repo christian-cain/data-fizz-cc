@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "jquery": "^3.7.0",
-    "pupeteer": "^0.0.1"
+    "puppeteer": "^20.8.0"
   }
 }
