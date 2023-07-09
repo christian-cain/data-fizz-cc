@@ -1,0 +1,7 @@
+Products outside of the Household Essentials category.
+
+Under the current approach, products outside of the Household Essentials category can be easily extended to granted they fall under a specific product category. These product categories can be found in the footer. We can update the script to look for multiple categories, and then fetch the relative products for that category. As the products themselves share a similar mark up structure, it should not require much extra effort.
+
+Domains beyond Walgreens.com.
+
+Fetching information on domains beyond Walgreens.com will require a completely different traversal pattern depending on the domain's page structure. Though the product information will likely be the same as these are common data points that most retailers usually track.
