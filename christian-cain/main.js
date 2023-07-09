@@ -3,6 +3,20 @@ const $ = require('jquery');
 
 const URL = 'https://www.walgreens.com/';
 
+// Defining Product class
+class Product {
+    constructor(obj) {
+      this.id = obj.id;
+      this.productName = obj.productName;
+      this.listPrice = obj.listPrice;
+      this.description = obj.description;
+      this.productDimensions = obj.productDimensions;
+      this.imageURLs = obj.imageURLs;
+      this.productUPC = obj.productUPC;
+      this.sourceURL = obj.sourceURL
+    }
+}
+
 async function run () {
   let results = [];
 
@@ -49,35 +63,44 @@ async function run () {
 
     // find individual product data
     const data = await page.evaluate(() => {
-
-      // format price & account for discount changes
-      let formattedPrice = '';
-      let price = $("span#regular-price span.product__price").text();
-      if (price !== '') {
-        formattedPrice = '$' + (parseInt(price.replace('$', '')) / 100).toString();
-      } else {
-        formattedPrice = $("span#sales-price-info").text();
-      };
-
       // format name & account for brand link
-      let name = $("span#productTitle").text();
+      let productName = $("span#productTitle").text();
       const brand = $("a.brand-title strong").text();
       if (brand !== '') {
         name = `${brand} ${name}`;
       };
 
+      // format price & account for discount changes
+      let listPrice = '';
+      let price = $("span#regular-price span.product__price").text();
+      if (price !== '') {
+        listPrice = '$' + (parseInt(price.replace('$', '')) / 100).toString();
+      } else {
+        listPrice = $("span#sales-price-info").text();
+      };
+
+      // format image urls
+      let imageURLs = [];
+      imageURLs.push($("img#productImg").prop("src"));
+      $("ul#thumbnailImages img").each((i, obj) => imageURLs.push($(obj).prop("src")));
+
       return {
-        name,
-        price: formattedPrice,
+        productName,
+        listPrice,
         description: $("li#prodDesc div.inner p").text(),
-        dimensions: $("p.universal-product-inches").text(),
-        img: $("img.productImg").prop("src"),
-        upc: $("div#prodSpecCont table td").last().text()
+        productDimensions: $("p.universal-product-inches").text(),
+        imageURLs,
+        productUPC: $("div#prodSpecCont table td").last().text()
       };
     });
 
     // build product obj
-    results.push(data);
+    const product = new Product({
+      id: i,
+      sourceURL: product_links[i],
+      ...data
+    });
+    results.push(product);
   }
 
   // close browser
