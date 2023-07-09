@@ -106,7 +106,10 @@ async function run () {
   // close browser
   browser.close();
 
-  console.log("results: ", results);
+  const json = JSON.stringify(results.map(el => ({ "product": el })));
+  console.log(json); // note - for verification purposes
+
+  return json;
 };
 
 run();
